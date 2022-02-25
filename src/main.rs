@@ -1,10 +1,11 @@
-mod dictionary;
+use wordle_adventure::dictionary;
 
 use std::{io, io::Write};
 
 fn main() -> Result<(), io::Error> {
     let answer = dictionary::choose_random_word();
     // println!("answer {}", answer);
+
     let mut attempts = 1;
 
     while attempts < 7 {
@@ -13,7 +14,7 @@ fn main() -> Result<(), io::Error> {
 
         let mut guess = String::new();
         io::stdin().read_line(&mut guess)?;
-        if guess.starts_with(answer) {
+        if guess == answer {
             println!("you got it!");
             return Ok(())
         }

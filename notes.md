@@ -24,4 +24,15 @@ This is a step-by-step adventure for learning Rust by building out a Wordle game
     * `starts_with` - `guess == answer` would work but have to strip `\n` from guess
     * `print!`, `println!` macros
 
-4. Alphabet
+4. `Word` struct
+
+    * motivation: 
+      * only compare first 5 characters (instead of `guess.starts_with(answer)`)
+      * newtypes are useful for extending functionality to existing types
+    * move dictionary to lib
+    * create `Word` as newtype for `[5, char]`
+    * `impl FromStr` to convert from `&str` to `Word` easily (with `parse`)
+    * `impl PartialEq`
+    * `impl Display`
+    * tests
+    * update `choose_random_word`
