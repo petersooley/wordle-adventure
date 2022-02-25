@@ -17,4 +17,11 @@ This is a step-by-step adventure for learning Rust by building out a Wordle game
     * `str::lines()` - docs are your friend
     * why `unwrap` here? We've done our bounds checking. It's safe.
 
-3. Read input
+3. Basic game loop
+
+    * `stdin` & `stdout` - docs are your friend
+    * `Result` and `?`
+    * `starts_with` - `guess == answer` would work but have to strip `\n` from guess
+    * `print!`, `println!` macros
+
+4. Alphabet
