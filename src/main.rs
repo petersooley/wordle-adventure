@@ -1,3 +1,6 @@
+mod dictionary;
+
 fn main() {
-    println!("Hello, world!");
+    let answer = dictionary::choose_random_word();
+    println!("today's answer: {}", answer);
 }
