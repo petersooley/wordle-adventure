@@ -36,3 +36,13 @@ This is a step-by-step adventure for learning Rust by building out a Wordle game
     * `impl Display`
     * tests
     * update `choose_random_word`
+
+5. `Alphabet` & `Letter`
+   * motivation: want to print the alphabet and keep track of user guesses
+   * `Letter` design choice: why not stick to one enum i.e. `Letter::Almost("d")`?
+   * `Alphabet` design choice: why not one variant-per-letter enum i.e. `Alphabet::D(State::Almost)`?
+   * ranges: `b'a'..=b'z'`
+   * char literal: `'a'` vs str literal: `"a"`
+   * `IntoIterator` for Alphabet - hello lifetimes! (we want to return an iterator over the items without giving up ownership)
+   * `for letter in &alphabet` - notice the immutable borrow. needed because in a loop and can't _move_ it more than once.
+   * `Deref` trait and `**`
