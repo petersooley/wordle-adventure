@@ -46,3 +46,9 @@ This is a step-by-step adventure for learning Rust by building out a Wordle game
    * `IntoIterator` for Alphabet - hello lifetimes! (we want to return an iterator over the items without giving up ownership)
    * `for letter in &alphabet` - notice the immutable borrow. needed because in a loop and can't _move_ it more than once.
    * `Deref` trait and `**`
+
+6. Update `Word` struct to use `Letter` instead of char
+   * motivation: this allows us to use `Word` for managing the state of user guesses
+   * `From` trait implementations makes things a little clearer
+   * `Copy` & `Clone` traits are fine since a `Letter` isn't holding a lot of memory
+7. 

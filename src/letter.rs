@@ -1,13 +1,13 @@
 use std::ops::Deref;
 
 /// A game-state letter that keeps track of user attempts involving this single letter
-#[derive(Debug)]
+#[derive(Debug, Eq, PartialEq, Copy, Clone)]
 pub struct Letter {
     c: char,
     state: State,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Eq, PartialEq, Copy, Clone)]
 pub enum State {
     Unused,
     Missed,
@@ -16,15 +16,17 @@ pub enum State {
 }
 
 impl Letter {
-    pub fn new(c: char) -> Self {
+    pub fn state(&self) -> &State {
+        &self.state
+    }
+}
+
+impl From<char> for Letter {
+    fn from(c: char) -> Self {
         Self {
             c: c.to_ascii_lowercase(),
             state: Default::default(),
         }
-    }
-
-    pub fn state(&self) -> &State {
-        &self.state
     }
 }
 

@@ -6,7 +6,7 @@ pub struct Alphabet([Letter; LEN]);
 impl Default for Alphabet {
     fn default() -> Self {
         let letters: [Letter; LEN] = (b'a'..=b'z')
-            .map(|b| Letter::new(char::from(b)))
+            .map(|b| Letter::from(char::from(b)))
             .collect::<Vec<Letter>>()
             .try_into()
             .unwrap();
