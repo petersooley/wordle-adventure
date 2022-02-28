@@ -113,6 +113,15 @@ impl IndexMut<usize> for Word {
     }
 }
 
+impl<'a> IntoIterator for &'a Word {
+    type Item = &'a Letter;
+    type IntoIter = std::slice::Iter<'a, Letter>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.0.as_slice().into_iter()
+    }
+}
+
 #[rustfmt::skip]
 #[cfg(test)]
 mod word_test {

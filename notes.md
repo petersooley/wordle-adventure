@@ -57,3 +57,8 @@ This is a step-by-step adventure for learning Rust by building out a Wordle game
    * `fold` in the `count_matches`
    * `Word::check` - check out all the stars & hello `HashMap`
    * `Index` & `IndexMut`
+8. Finish text-based play
+   * Better alphabet output
+   * Reveal guess state
+   * Check guess lives in dictionary
+   * Generic functions!

@@ -1,9 +1,26 @@
-use wordle_adventure::{dictionary, Alphabet, LetterState, Word};
+use wordle_adventure::{dictionary, Alphabet, Letter, LetterState, Word};
 
 use std::{io, io::Write};
 
+fn show_letter_states<'a>(letters: impl IntoIterator<Item = &'a Letter>) {
+    let mut chars = String::new();
+    let mut states = String::new();
+    for letter in letters {
+        chars.push(**letter);
+        chars.push(' ');
+        match letter.state() {
+            LetterState::Unused => states.push_str(". "),
+            LetterState::Missed => states.push_str("× "),
+            LetterState::Almost => states.push_str("! "),
+            LetterState::Exact => states.push_str("✓ "),
+        }
+    }
+    println!("{}", chars);
+    println!("{}", states);
+}
+
 fn main() -> Result<(), io::Error> {
-    let alphabet = Alphabet::default();
+    let mut alphabet = Alphabet::default();
     let answer = dictionary::choose_random_word();
     println!("answer {}", answer);
 
@@ -11,17 +28,7 @@ fn main() -> Result<(), io::Error> {
 
     while attempts < 7 {
         println!();
-
-        for letter in &alphabet {
-            match letter.state() {
-                LetterState::Unused => print!("{}", **letter),
-                LetterState::Missed => print!("_"),
-                LetterState::Almost => print!("?"),
-                LetterState::Exact => print!("!"),
-            }
-            print!(" ");
-        }
-        io::stdout().flush()?;
+        show_letter_states(&alphabet);
 
         print!("\nguess #{}: ", attempts);
         io::stdout().flush()?;
@@ -37,6 +44,11 @@ fn main() -> Result<(), io::Error> {
             }
         };
 
+        if !dictionary::is_in_list(&guess) {
+            println!("that is not a word in the list");
+            continue;
+        }
+
         let is_correct = guess.check(&answer);
 
         if is_correct {
@@ -44,7 +56,12 @@ fn main() -> Result<(), io::Error> {
             return Ok(());
         }
 
-        println!("wrong, try again.");
+        alphabet.update(&guess);
+
+        println!();
+
+        show_letter_states(&guess);
+
         attempts += 1;
     }
 
