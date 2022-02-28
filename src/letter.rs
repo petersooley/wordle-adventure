@@ -7,6 +7,16 @@ pub struct Letter {
     state: State,
 }
 
+impl Letter {
+    pub fn new(c: char, state: State) -> Self {
+        Self { c, state }
+    }
+
+    pub fn set_state(&mut self, state: State) {
+        self.state = state;
+    }
+}
+
 #[derive(Debug, Eq, PartialEq, Copy, Clone)]
 pub enum State {
     Unused,

@@ -51,4 +51,9 @@ This is a step-by-step adventure for learning Rust by building out a Wordle game
    * motivation: this allows us to use `Word` for managing the state of user guesses
    * `From` trait implementations makes things a little clearer
    * `Copy` & `Clone` traits are fine since a `Letter` isn't holding a lot of memory
-7. 
+7. Update `Word` state from user guesses
+   * Convert user input to `Word` and provide better errors
+   * More tests
+   * `fold` in the `count_matches`
+   * `Word::check` - check out all the stars & hello `HashMap`
+   * `Index` & `IndexMut`
