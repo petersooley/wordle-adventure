@@ -1,70 +1,27 @@
-use wordle_adventure::{dictionary, Alphabet, Letter, LetterState, Word};
+use eframe::{egui, epi};
 
-use std::{io, io::Write};
+struct Wordle;
 
-fn show_letter_states<'a>(letters: impl IntoIterator<Item = &'a Letter>) {
-    let mut chars = String::new();
-    let mut states = String::new();
-    for letter in letters {
-        chars.push(**letter);
-        chars.push(' ');
-        match letter.state() {
-            LetterState::Unused => states.push_str(". "),
-            LetterState::Missed => states.push_str("× "),
-            LetterState::Almost => states.push_str("! "),
-            LetterState::Exact => states.push_str("✓ "),
-        }
+impl epi::App for Wordle {
+    fn update(&mut self, ctx: &egui::Context, _frame: &epi::Frame) {
+        egui::CentralPanel::default().show(ctx, |ui| {
+            ui.centered_and_justified(|ui| {
+                let mut frame = egui::Frame::group(ui.style());
+                frame.stroke = egui::Stroke::new(2.0, egui::Color32::GRAY);
+                frame.show(ui, |ui| {
+                    ui.label("h");
+                });
+            });
+        });
     }
-    println!("{}", chars);
-    println!("{}", states);
+
+    fn name(&self) -> &str {
+        "Wordle"
+    }
 }
 
-fn main() -> Result<(), io::Error> {
-    let mut alphabet = Alphabet::default();
-    let answer = dictionary::choose_random_word();
-    println!("answer {}", answer);
-
-    let mut attempts = 1;
-
-    while attempts < 7 {
-        println!();
-        show_letter_states(&alphabet);
-
-        print!("\nguess #{}: ", attempts);
-        io::stdout().flush()?;
-
-        let mut buf = String::new();
-        io::stdin().read_line(&mut buf)?;
-
-        let mut guess: Word = match buf.trim_end().parse() {
-            Ok(w) => w,
-            Err(e) => {
-                println!("invalid guess: {}", e);
-                continue;
-            }
-        };
-
-        if !dictionary::is_in_list(&guess) {
-            println!("that is not a word in the list");
-            continue;
-        }
-
-        let is_correct = guess.check(&answer);
-
-        if is_correct {
-            println!("you got it!");
-            return Ok(());
-        }
-
-        alphabet.update(&guess);
-
-        println!();
-
-        show_letter_states(&guess);
-
-        attempts += 1;
-    }
-
-    println!("\nsorry about your luck. it was '{}'.", answer);
-    Ok(())
+fn main() {
+    let app = Wordle;
+    let options = eframe::NativeOptions::default();
+    eframe::run_native(Box::new(app), options);
 }
